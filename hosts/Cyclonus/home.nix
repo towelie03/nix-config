@@ -1,52 +1,57 @@
 { config, pkgs, inputs, self, ... }:
 
 let
-  allPackages = import ./packages.nix { inherit pkgs; };
   inherit (pkgs.stdenv.hostPlatform) system;
+  allPackages = import ../../pkgs/packages.nix { inherit pkgs; };
   nixvim-package = inputs.nixvim-config.packages.${system}.default;
   extended-nixvim = nixvim-package.extend config.stylix.targets.nixvim.exportedModule;
-in
-{
-  home.username = "gwimbly";
-  home.homeDirectory = "/home/gwimbly";
+in {
+  home = {
+    username = "gwimbly";
+    homeDirectory = "/home/gwimbly";
+    stateVersion = "25.05";
+
+    packages = allPackages;
+
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
+
   imports = [
+    # Inputs
     inputs.niri.homeModules.niri
     inputs.stylix.homeModules.stylix
     inputs.dankMaterialShell.homeModules.dankMaterialShell.default
     inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
-    ../../stylix/stylix.nix
-    ../../home/apps/fish/fish.nix
-    ../../home/niri/niri.nix
-    ../../home/apps/nixcord.nix
-    ../../home/editors/nixvim.nix
-    ../../home/apps/alacritty.nix
-    ../../home/apps/git.nix
-    ../../home/apps/ghostty.nix
-    ../../home/apps/fastfetch.nix
-    ../../home/apps/obs.nix
-    ../../home/apps/brave.nix
-    ../../home/apps/lazygit.nix
-    ../../home/apps/btop.nix
-    ../../home/apps/superfile.nix
-    ../../home/apps/starship/starship.nix
-
     inputs.nixvim.homeModules.nixvim
     inputs.nixcord.homeModules.nixcord
 
+    # Local modules
+    ../../env/stylix/stylix.nix
+    ../../apps/steam.nix
+    ../../apps/lact.nix
+    ../../apps/fish/fish.nix
+    ../../apps/niri/niri.nix
+    ../../apps/nixcord.nix
+    ../../apps/nixvim/nixvim.nix
+    ../../apps/alacritty.nix
+    ../../apps/git.nix
+    ../../apps/ghostty.nix
+    ../../apps/fastfetch.nix
+    ../../apps/obs.nix
+    ../../apps/brave.nix
+    ../../apps/lazygit.nix
+    ../../apps/btop.nix
+    ../../apps/superfile.nix
+    ../../apps/starship/starship.nix
   ];
 
-  home.packages = allPackages;
-
-  xdg = {
-    portal.enable = true;
-    portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    };
-
-  home.stateVersion = "25.05";
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   services.cliphist = {
@@ -54,14 +59,28 @@ in
     allowImages = true;
   };
 
-  programs.home-manager.enable = true;
-  programs.dankMaterialShell.enable = true;
-  programs.dankMaterialShell.enableSystemd = true;
-  programs.zoxide.enable = true;
-  programs.zoxide.enableFishIntegration = true;
-  programs.fzf.enable = true;
-  programs.fzf.enableFishIntegration = true;
-  programs.nixvim.extraPackages = with pkgs; [ wl-clipboard ];
-  programs.nixvim.opts.clipboard = [ "unnamedplus" ];
+  programs = {
+    home-manager.enable = true;
+
+    dankMaterialShell = {
+      enable = true;
+      enableSystemd = true;
+    };
+
+    zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
+    fzf = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
+    nixvim = {
+      extraPackages = with pkgs; [ wl-clipboard ];
+      opts.clipboard = [ "unnamedplus" ];
+    };
+  };
 }
 

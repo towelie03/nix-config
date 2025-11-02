@@ -4,71 +4,68 @@
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.default
     inputs.dankMaterialShell.nixosModules.greeter
-    #"${self}/system/greeter/greeter.nix"
-    "${self}/system/programs/steam.nix"
-    "${self}/system/programs/lact.nix"
-    "${self}/system/environment.nix"
-    "${self}/system/packages.nix"
+    ../../env/env.nix
+    ../../pkgs/packages.nix
   ];
 
   time.timeZone = "America/Vancouver";
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [
-    (final: prev: {
-      nur = import inputs.nur {
-        nurpkgs = prev;
-        pkgs = prev;
-      };
-    })
-  ];
 
-  users.groups.i2c = {};
-  users.groups.wireshark = {};
-
-  users.users.gwimbly = {
-    isNormalUser = true;
-    description = "gwimbly";
-    shell = pkgs.fish;
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" "input" "plugdev" "bluetooth" "i2c" "wireshark" ];
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [
+      (final: prev: {
+        nur = import inputs.nur { nurpkgs = prev; pkgs = prev; };
+      })
+    ];
   };
 
-  #services.greetd.enable = true;
-  #services.greetd.settings.default_session.user = "gwimbly";
+  users = {
+    groups = {
+      i2c = {};
+      wireshark = {};
+    };
 
-  security.sudo.enable = false;
-  security.doas = {
-    enable = true;
-    wheelNeedsPassword = false;
-    extraRules = [
-      {
+    users.gwimbly = {
+      isNormalUser = true;
+      description = "gwimbly";
+      shell = pkgs.fish;
+      extraGroups = [ "wheel" "networkmanager" "audio" "video" "input" "plugdev" "bluetooth" "i2c" "wireshark" ];
+    };
+  };
+
+  security = {
+    sudo.enable = false;
+    doas = {
+      enable = true;
+      wheelNeedsPassword = false;
+      extraRules = [{
         users = [ "gwimbly" ];
         keepEnv = true;
         persist = true;
-      }
-    ];
+      }];
+    };
   };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users = {
-      "gwimbly" = import ./home.nix;
-    };
+    users."gwimbly" = import ./home.nix;
+    backupFileExtension = "backup";
   };
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     nerd-fonts._0xproto
     nerd-fonts.droid-sans-mono
-    noto-fonts
-    noto-fonts-color-emoji
-    noto-fonts-cjk-sans
-    noto-fonts-cjk-serif
-    material-symbols
-    material-icons
     nerd-fonts.ubuntu
     nerd-fonts.mononoki 
     nerd-fonts.fira-code
     nerd-fonts.roboto-mono
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    noto-fonts-color-emoji
+    material-icons
+    material-symbols
   ];
 
   boot = {
@@ -79,100 +76,97 @@
     initrd.availableKernelModules = [ "i2c-dev" ];
   };
 
-  services.udev.packages = [ pkgs.rwedid ];
+  services = {
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+    };
+
+    power-profiles-daemon.enable = true;
+    upower.enable = true;
+    printing.enable = true;
+    gvfs.enable = true;
+    tumbler.enable = true;
+    tailscale = {
+      enable = true;
+      useRoutingFeatures = "client";
+    };
+
+    dbus = {
+      enable = true;
+      packages = [ pkgs.bluez ];
+    };
+
+    xserver.enable = false;
+    openssh.settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = "no";
+    };
+  };
+
+  networking = {
+    hostName = "Cyclonus";
+    wireless = {
+      enable = false;
+      userControlled.enable = false;
+    };
+    networkmanager = {
+      enable = true;
+      wifi = {
+        backend = "wpa_supplicant";
+        powersave = false;
+      };
+    };
+  };
+
+  hardware = {
+    enableRedistributableFirmware = true;
+    bluetooth.enable = true;
+  };
+
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = lib.genAttrs [
+      "LC_ADDRESS" "LC_IDENTIFICATION" "LC_MEASUREMENT" "LC_MONETARY"
+      "LC_NAME" "LC_NUMERIC" "LC_PAPER" "LC_TELEPHONE" "LC_TIME"
+    ] (_: "en_US.UTF-8");
+  };
+
+  programs = {
+    fish.enable = true;
+    wireshark = {
+      enable = true;
+      usbmon.enable = true;
+    };
+    dconf.enable = true;
+    ssh.startAgent = true;
+    nh = {
+      enable = true;
+      flake = "/home/gwimbly/nixos-config/";
+      clean = {
+        enable = true;
+        extraArgs = "--keep-since 4d --keep 3";
+      };
+    };
+  };
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
   };
 
-  environment.shellAliases = {
-    sudo = "doas";
+  environment = {
+    shellAliases.sudo = "doas";
+    systemPackages = with pkgs; [
+      bluez tlp lm_sensors openssl nh
+    ];
   };
 
-  networking = {
-    hostName = "Cyclonus";
-    wireless.enable = false;
-    wireless.userControlled.enable = false;
+  services.udev.packages = [ pkgs.rwedid ];
 
-    networkmanager = {
-      enable = true;
-      wifi.backend = "wpa_supplicant";
-      wifi.powersave = false;
-    };
-  };
-
-  hardware.enableRedistributableFirmware = true;
-
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "en_US.UTF-8";
-      LC_IDENTIFICATION = "en_US.UTF-8";
-      LC_MEASUREMENT = "en_US.UTF-8";
-      LC_MONETARY = "en_US.UTF-8";
-      LC_NAME = "en_US.UTF-8";
-      LC_NUMERIC = "en_US.UTF-8";
-      LC_PAPER = "en_US.UTF-8";
-      LC_TELEPHONE = "en_US.UTF-8";
-      LC_TIME = "en_US.UTF-8";
-    };
-  };
-
-  programs.fish.enable = true;
-  programs.wireshark = {
-    enable          = true;
-    usbmon.enable   = true;
-  };
-  programs.dconf.enable = true;
-  programs.ssh.startAgent = true;
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/home/gwimbly/nixos-config/"; # sets NH_OS_FLAKE variable for you
-  };
-
-  services = {
-    pipewire.enable = true;
-    pipewire.alsa.enable = true;
-    pipewire.alsa.support32Bit = true;
-    pipewire.pulse.enable = true;
-    pipewire.wireplumber.enable = true;
-
-    tailscale.enable = true;
-    tailscale.useRoutingFeatures = "client";
-
-    dbus.enable = true;
-    dbus.packages = with pkgs; [ bluez ];
-
-    xserver.enable = false; # Wayland-only
-    power-profiles-daemon.enable = true;
-    upower.enable = true;
-
-    printing.enable = true;
-    gvfs.enable = true;
-    tumbler.enable = true;
-  };
-
-  services.openssh.settings = {
-    PermitRootLogin = "no";
-    PasswordAuthentication = "no";
-  };
-
-
-  hardware.bluetooth.enable = true;
-
-  # <- IMPORTANT: add portal packages here so they are present in the system profile
-  environment.systemPackages = with pkgs; [
-    bluez
-    tlp
-    lm_sensors
-    openssl
-    nh
-  ];
-
-  home-manager.backupFileExtension = "backup";
   system.stateVersion = "25.05";
 }
 
