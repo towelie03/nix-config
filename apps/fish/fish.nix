@@ -28,7 +28,7 @@
       # Bind keys
       bind ! __history_repeat_last
       bind '$' __history_repeat_args
-      fastfetch
+      microfetch
     '';
 
     shellAliases = {

@@ -1,37 +1,49 @@
-{ config, pkgs, lib, self, ... }:
+{ config, pkgs, lib, ... }:
+
 {
-  stylix.enable = true;
-  stylix.autoEnable = true;
-  stylix.opacity.terminal = 0.8;
-  stylix.targets.nixcord.enable = false;
+  stylix = {
+    enable = true;
+    autoEnable = true;
+    enableReleaseChecks = false;
 
-  stylix.targets.nixvim.enable = true;
-  stylix.targets.nixos-icons.enable = true;
-  #stylix.base16Scheme = toString (builtins.path {
-    #path = ../../assets/themes/base-16/tokyo-night-dark.yaml;
-  #});
-  
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark-terminal.yaml";
-  stylix.enableReleaseChecks = false;
-  stylix.fonts = {
-    serif = {
-      package = pkgs.nerd-fonts.ubuntu;
-      name = "Ubuntu Nerd Font";
+    # Transparency
+    opacity.terminal = 0.8;
+
+    # Theming targets
+    targets = {
+      nixvim.enable = true;
+      nixos-icons.enable = true;
+      nixcord.enable = false;
     };
 
-    sansSerif = {
-      package = pkgs.nerd-fonts.ubuntu;
-      name = "Ubuntu Nerd Font";
+    # Base16 theme
+    base16Scheme =
+      "${pkgs.base16-schemes}/share/themes/synth-midnight-dark.yaml";
+
+    # Fonts
+    fonts = {
+      serif = {
+        package = pkgs.nerd-fonts.ubuntu;
+        name = "Ubuntu Nerd Font";
+      };
+
+      sansSerif = {
+        package = pkgs.nerd-fonts.ubuntu;
+        name = "Ubuntu Nerd Font";
+      };
+
+      monospace = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font";
+      };
     };
 
-    monospace = {
-      package = pkgs.nerd-fonts.jetbrains-mono;
-      name = "JetBrainsMono Nerd Font";
-    };  
-  };
-  stylix.cursor = {
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Ice";
-    size = 14;
+    # Cursor
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Dark";
+      size = 14;
+    };
   };
 }
+
