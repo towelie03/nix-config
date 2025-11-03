@@ -41,7 +41,6 @@ in
     ../../apps/alacritty.nix
     ../../apps/git.nix
     ../../apps/ghostty.nix
-    ../../apps/fastfetch.nix
     ../../apps/obs.nix
     ../../apps/brave.nix
     ../../apps/lazygit.nix

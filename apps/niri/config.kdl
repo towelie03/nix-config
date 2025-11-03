@@ -206,8 +206,8 @@ binds {
 
    Mod+Shift+Slash { show-hotkey-overlay; }
 
-   Ctrl+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
-   Ctrl+Shift+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+   Ctrl+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+   Ctrl+Shift+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
    Mod+B hotkey-overlay-title="Open Browser: brave" { spawn "brave"; }
    Mod+E hotkey-overlay-title="Open File Manager: thunar" { spawn "thunar"; }
  

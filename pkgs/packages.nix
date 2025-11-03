@@ -62,6 +62,7 @@
     less
     zoxide
     fd
+    microfetch
 
     # Networking & containers
     tailscale
