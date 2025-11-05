@@ -7,6 +7,8 @@
     ../../env/env.nix
     ../../pkgs/packages.nix
     ../../apps/steam.nix
+    ../../apps/thunar.nix
+
   ];
 
   time.timeZone = "America/Vancouver";

@@ -11,16 +11,13 @@ let
   color8 = "#c59c79";
   color9 = "#50C878";
   color10 = "#40B5AD";
-in
+in {
 
-{
-
-  home-manager.sharedModules = [
-    (_: {   
   programs.fastfetch = {
     enable = true;
     package = pkgs.fastfetch;
     settings = {
+      # ... your JSON content here ...
       "$schema" = "https:#github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
     
       logo = {
@@ -153,6 +150,5 @@ in
 	    ];
     };
   };
-    })
-  ];
 }
+

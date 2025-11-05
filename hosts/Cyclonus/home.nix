@@ -34,8 +34,8 @@ in
     # Local modules
     ../../env/stylix/stylix.nix
     #../../apps/steam.nix
-    ../../apps/thunar.nix
     ../../apps/fish/fish.nix
+    ../../apps/fastfetch/fastfetch.nix
     ../../apps/niri/niri.nix
     ../../apps/nixcord.nix
     ../../apps/nixvim/nixvim.nix
@@ -66,6 +66,7 @@ in
     dankMaterialShell = {
       enable = true;
       enableSystemd = true;
+      quickshell.package = inputs.quickshell.packages.x86_64-linux.quickshell;
     };
 
     zoxide = {
