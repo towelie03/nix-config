@@ -1,11 +1,20 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  programs.hyprland = {
+  wayland.windowManager.hyprland = {
     enable = true;
 
-    # Import your existing hyprland.conf
-    config = builtins.readFile "${config.home.homeDirectory}/.config/hypr/hyprland.conf";
+    package = null;
+    portalPackage = null;
+
+    systemd.variables = [ "--all" ];
+
+    settings = lib.mkMerge [
+      (import ./settings.nix)
+      (import ./binds.nix)
+      (import ./animations.nix)
+      (import ./rules.nix)
+    ];
   };
 }
 

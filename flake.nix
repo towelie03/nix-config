@@ -6,7 +6,6 @@
     nixvim.url = "github:nix-community/nixvim";
     home-manager.url = "github:nix-community/home-manager";
     nur.url = "github:nix-community/NUR";
-    #chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     stylix = {
       url = "github:danth/stylix";
@@ -33,7 +32,12 @@
     quickshell = {
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
-   };
+    };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     niri = {
       url = "github:sodiboo/niri-flake";
@@ -46,17 +50,28 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, nur, stylix, niri, dankMaterialShell, nixcord, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixvim, nur, stylix, hyprland, niri, dankMaterialShell, nixcord, ... }@inputs:
     {
-      nixosConfigurations.Cyclonus = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit self inputs; };
+      nixosConfigurations = {
+        Cyclonus = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit self inputs; };
+          modules = [
+            ./hosts/Cyclonus/configuration.nix
+            inputs.stylix.nixosModules.stylix
+            inputs.home-manager.nixosModules.default
+          ];
+        };
 
-        modules = [
-          ./hosts/Cyclonus/configuration.nix
-          inputs.stylix.nixosModules.stylix
-          inputs.home-manager.nixosModules.default
-        ];
+        Megatronus = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit self inputs; };
+          modules = [
+            ./hosts/Megatronus/configuration.nix
+            inputs.stylix.nixosModules.stylix
+            inputs.home-manager.nixosModules.default
+          ];
+        };
       };
     };
 }
