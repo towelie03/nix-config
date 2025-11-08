@@ -106,9 +106,12 @@
     };
 
     xserver.enable = false;
-    openssh.settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = "no";
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
     };
   };
 
@@ -172,6 +175,6 @@
 
   services.udev.packages = [ pkgs.rwedid ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
 
