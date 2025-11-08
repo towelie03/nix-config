@@ -15,7 +15,7 @@
       gpg.format = "ssh";
 
       user.signingkey = "~/.ssh/id_ed25519.pub";
-      safe.directory = "/home/gwimbly/nix-config";
+      safe.directory = "/home/gwimbly/.nix-config";
     };
   };
 }
