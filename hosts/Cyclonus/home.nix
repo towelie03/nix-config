@@ -10,7 +10,7 @@ in
   home = {
     username = "gwimbly";
     homeDirectory = "/home/gwimbly";
-    stateVersion = "25.05";
+    stateVersion = "25.11";
 
     # Home Manager packages
     packages = allPackages;
@@ -82,11 +82,7 @@ in
     nixvim = {
       extraPackages = with pkgs; [ wl-clipboard ];
       opts.clipboard = [ "unnamedplus" ];
-    };
-    
-    #steam = {
-    #  enable = true;
-    #};
+    };  
   };
 }
 
