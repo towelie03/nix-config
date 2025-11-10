@@ -13,10 +13,7 @@
     openrgb-with-all-plugins
 
     file-roller
-    obsidian
-    xfce.thunar
     adw-gtk3
-    font-manager
     feishin
 
     # TUI
@@ -48,9 +45,6 @@
     p7zip
     mpv
     cava
-    brightnessctl
-    lazygit
-    superfile
     fzf
     git
     wget
@@ -58,14 +52,12 @@
     lsd
     ripgrep
     bat
-    starship
     less
     zoxide
     fd
     microfetch
 
     # Networking & containers
-    tailscale
     docker
     docker-compose
     wireshark
@@ -77,8 +69,6 @@
     kdePackages.qtbase
     kdePackages.qtdeclarative
 
-    # Niri
-    xwayland-satellite
   ];
 }
 
