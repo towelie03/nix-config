@@ -17,6 +17,8 @@ in
 
     sessionVariables = {
       EDITOR = "nvim";
+      VISUAL = "nvim";
+      NIXOS_OZONE_WL = "1";
     };
   };
 
@@ -43,6 +45,12 @@ in
     ../../apps/superfile.nix
     ../../apps/starship/starship.nix
   ];
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+  };
+
 
   services.cliphist = {
     enable = true;

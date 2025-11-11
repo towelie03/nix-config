@@ -25,18 +25,31 @@
   };
 
   users = {
+    mutableUsers = true;
+
     groups = {
       i2c = {};
       wireshark = {};
     };
 
-    users.gwimbly = {
-      isNormalUser = true;
-      description = "gwimbly";
-      shell = pkgs.fish;
-      extraGroups = [ "wheel" "networkmanager" "audio" "video" "input" "plugdev" "bluetooth" "i2c" "wireshark" ];
+    users = {
+      gwimbly = {
+        isNormalUser = true;
+        description = "gwimbly";
+        shell = pkgs.fish;
+        extraGroups = [
+          "wheel" "networkmanager" "audio" "video" "input"
+          "plugdev" "bluetooth" "i2c" "wireshark"
+        ];
+        initialPassword = "test";
+      };
+
+      root = {
+        initialPassword = "root";
+      };
     };
   };
+
 
   security = {
     sudo.enable = false;

@@ -63,6 +63,7 @@
 
     # Networking & containers
     tailscale
+    qemu
     docker
     docker-compose
     wireshark
