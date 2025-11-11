@@ -143,6 +143,13 @@
     ] (_: "en_US.UTF-8");
   };
 
+  
+  virtualisation.libvirtd.enable = true;
+
+  # if you use libvirtd on a desktop environment
+  programs.virt-manager.enable = true; # can be used to manage non-local hosts as well
+
+
   programs = {
     fish.enable = true;
     wireshark = {
