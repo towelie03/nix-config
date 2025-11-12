@@ -27,7 +27,7 @@
         "CTRL_SHIFT, RETURN, exec, kitty"
         "CTRL_SHIFT, ESCAPE, exec, alacritty -e btop"
 
-        "SUPER, B, exec, brave --disable-features=WaylandWpColorManagerV1"
+        "SUPER, B, exec, brave --disable-gpu"
 
         "SUPER, left, movefocus, l"
         "SUPER, right, movefocus, r"
@@ -63,9 +63,9 @@
     bindl = [
       ", XF86AudioMute, exec, dms ipc call audio mute"
       ", XF86AudioMicMute, exec, dms ipc call audio micmute"
-      ",XF86AudioPrev, exec, playerctl previous"
-      ",XF86AudioPlay, exec, playerctl play-pause"
-      ",XF86AudioNext, exec, playerctl next"
+      ", XF86AudioPrev, exec, playerctl previous"
+      ", XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioNext, exec, playerctl next"
       ", XF86MonBrightnessUp, exec, dms ipc call brightness increment 5 \"\""
       ", XF86MonBrightnessDown, exec, dms ipc call brightness decrement 5 \"\""
     ];

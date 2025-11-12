@@ -11,8 +11,6 @@
     };
 
     general = {
-      # col.active_border = "rgb($surface)";
-      # col.inactive_border = "rgb($surface)";
       gaps_in = 5;
       gaps_out = 8;
       border_size = 0;
@@ -62,8 +60,8 @@
       mouse_move_enables_dpms = true;
       key_press_enables_dpms = true;
       enable_swallow = true;
-      # vfr = true;
-      # vrr = true;
+      vfr = true;
+      vrr = true;
     };
 }
 

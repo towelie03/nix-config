@@ -20,8 +20,8 @@
       "workspace 10 silent, class:^(keepassxc)$"
       "workspace 9, class:^(mpv)$"
 
-      "float, class:^(thunar)$"
-      "size 875 550, class:^(thunar)$"
+      "float, class:^(nautilis)$"
+      "size 875 550, class:^(nautilis)$"
       "float, class:^(mpv)$"
 
       # opacity rules
