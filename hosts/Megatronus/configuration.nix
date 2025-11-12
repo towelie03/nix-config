@@ -188,10 +188,13 @@
       enable = true;
       qemu = {
         package = pkgs.qemu_kvm;          
-        swtpm.enable = true;      
+        swtpm.enable = true;  
       };
     };
+    spiceUSBRedirection.enable = true;
   };
+ 
+  services.spice-vdagentd.enable = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
   
@@ -205,6 +208,7 @@
 
   programs = {
     fish.enable = true;
+    virt-manager.enable = true;
     wireshark = {
       enable = true;
       usbmon.enable = true;
