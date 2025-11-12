@@ -8,16 +8,6 @@
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
 
-    extraPackages = with pkgs; [
-      steam-run
-      steamcmd
-      steam-tui
-      protontricks
-      lutris
-      protonup-qt
-      nexusmods-app
-      winetricks
-    ];
   };
 
   # Enable Gamescope separately on your channel
@@ -28,6 +18,19 @@
     SDL_VIDEODRIVER = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
   };
+
+  environment.systemPackages = [
+    # ... other packages
+    pkgs.steam-run
+    pkgs.steamcmd
+    pkgs.steam-tui
+    pkgs.protontricks
+    pkgs.lutris
+    pkgs.protonup-qt
+    pkgs.nexusmods-app
+    pkgs.winetricks
+  ];
+
 
 }
 
