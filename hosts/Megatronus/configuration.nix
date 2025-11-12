@@ -37,7 +37,7 @@
         shell = pkgs.fish;
         extraGroups = [
           "wheel" "networkmanager" "audio" "video" "input"
-          "plugdev" "bluetooth" "i2c" "wireshark"
+          "plugdev" "bluetooth" "i2c" "wireshark" "libvirtd"
         ];
       };
     };
@@ -57,7 +57,6 @@
     };
   };
 
-  # Home Manager
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users."gwimbly" = import ./home.nix;
@@ -165,25 +164,17 @@
   };
 
   nvidia = {
-    # Required for Wayland + modesetting
     modesetting.enable = true;
 
-    # Disable power management quirks unless you know you need them
     powerManagement.enable = false;
     powerManagement.finegrained = false;
 
-    # Use the open kernel module (good for 5000-series cards)
     open = true;
-
-    # Installs nvidia-settings and friends
     nvidiaSettings = true;
-
-    # Explicitly use the latest driver
     package = config.boot.kernelPackages.nvidiaPackages.latest;
     };
   };
 
-  # This line goes **outside** hardware, not inside it
   services.xserver.videoDrivers = [ "nvidia" ];
   
   i18n = {
@@ -220,7 +211,7 @@
   environment = {
     shellAliases.sudo = "doas";
     systemPackages = with pkgs; [
-      bluez tlp lm_sensors openssl nh
+      bluez tlp lm_sensors openssl nh winboat freerdp
     ];
     variables = {
       WLR_NO_HARDWARE_CURSORS = "1";
