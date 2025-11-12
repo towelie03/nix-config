@@ -24,7 +24,7 @@
       incsearch = true;
       smartcase = true;
     };
-    
+
     # Plugins
     plugins = {
       lualine.enable = true;
@@ -56,7 +56,11 @@
       };
 
       telescope.enable = true;
-      treesitter.enable = true;
+
+      treesitter = {
+        enable = true;
+        settings.ensure_installed = [ "python" "c" "cpp" "go" "lua" "bash" "json" "yaml" "nix" ];
+      };
 
       presence = {
         enable = true;
@@ -66,32 +70,58 @@
         };
       };
 
-      cmp.enable = true;
-      comment.enable = true;
-
-      vim-surround.enable = true;
-      fugitive.enable = true;
-
       # LSP plugin and servers
       lsp = {
         enable = true;
         servers = {
-          lua_ls = {};
-          pyright = {};
-          ts_ls = {};
           nil_ls = {
             enable = true;
-            settings = {
-              formatting.command = [ "nixpkgs-fmt" ];
-            };
+            settings.formatting.command = [ "nixpkgs-fmt" ];
+          };
+          pyright.enable = true;
+          gopls.enable = true;
+          jdtls.enable = true;
+          clangd.enable = true;
+          ts_ls.enable = true;
+          lua_ls.enable = true;
+        };
+      };
+
+      cmp = {
+        enable = true;
+        settings = {
+          sources = [
+            { name = "nvim_lsp"; }
+            { name = "buffer"; }
+            { name = "path"; }
+            { name = "luasnip"; }
+          ];
+        };
+      };
+
+      conform-nvim = {
+        enable = true;
+        settings = {
+          formatters_by_ft = {
+            python = [ "black" ];
+            go = [ "gofmt" ];
+            java = [ "google-java-format" ];
+            c = [ "clang-format" ];
+            cpp = [ "clang-format" ];
+            javascript = [ "prettier" ];
+            typescript = [ "prettier" ];
+            nix = [ "nixpkgs-fmt" ];
           };
         };
       };
+
+      # Optional smooth scrolling
+      neoscroll.enable = true;
     };
 
     globals = {
-      mapleader = " ";      # Use space as leader
-      maplocalleader = " "; # Optional
+      mapleader = " ";
+      maplocalleader = " ";
     };
 
     # Key mappings
@@ -112,7 +142,7 @@
         options.desc = "Toggle NvimTree";
       }
       {
-        key = "<Ctrl>w";
+        key = "<C-w>";
         action = "<cmd>NvimTreeFindFile<cr>";
         options.desc = "Find current file in explorer";
       }
