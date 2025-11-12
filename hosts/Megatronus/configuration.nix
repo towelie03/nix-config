@@ -24,6 +24,9 @@
     ];
   };
 
+  users = {
+    mutableUsers = true;
+
     groups = {
       i2c = {};
       wireshark = {};
@@ -38,8 +41,11 @@
           "wheel" "networkmanager" "audio" "video" "input"
           "plugdev" "bluetooth" "i2c" "wireshark"
         ];
+        initialPassword = "passwd";
       };
     };
+  };
+
 
   security = {
     sudo.enable = false;
