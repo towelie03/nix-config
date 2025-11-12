@@ -114,9 +114,39 @@
           };
         };
       };
+      
+      smear-cursor = {
+        enable = true;
+        settings = {
+          distance_stop_animating = 0.5;
+          hide_target_hack = false;
+          stiffness = 0.8;
+          trailing_stiffness = 0.5;        
+        };
+      };
+      
+      neoscroll = {
+        enable = true;
+        settings = {
+          cursor_scrolls_alone = true;
+          easing_function = "quadratic";
+          hide_cursor = true;
+          mappings = [
+            "<C-u>"
+            "<C-d>"
+            "<C-b>"
+            "<C-f>"
+            "<C-y>"
+            "<C-e>"
+            "zt"
+            "zz"
+            "zb"
+          ];
+          respect_scrolloff = false;
+          stop_eof = true;       
+        };
+      };
 
-      # Optional smooth scrolling
-      neoscroll.enable = true;
     };
 
     globals = {
@@ -146,36 +176,7 @@
         action = "<cmd>NvimTreeFindFile<cr>";
         options.desc = "Find current file in explorer";
       }
-      {
-        mode = [ "n" "i" "v" ]; # normal, insert, visual
-        key = "<Up>";
-        action = "<Nop>";
-        options.desc = "Disable Up arrow";
-      }
-      {
-        mode = [ "n" "i" "v" ];
-        key = "<Down>";
-        action = "<Nop>";
-        options.desc = "Disable Down arrow";
-      }
-      {
-        mode = [ "n" "i" "v" ];
-        key = "<Left>";
-        action = "<Nop>";
-        options.desc = "Disable Left arrow";
-      }
-      {
-        mode = [ "n" "i" "v" ];
-        key = "<Right>";
-        action = "<Nop>";
-        options.desc = "Disable Right arrow";
-      }
-      {
-        mode = [ "n" "i" "v" ];
-        key = "<Up>";
-        action = "<cmd>echo 'Use hjkl instead!'<cr>";
-        options.desc = "Remind to use hjkl";
-      }
+      
     ];
   };
 }
