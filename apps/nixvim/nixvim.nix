@@ -21,7 +21,7 @@
       incsearch = true;
       smartcase = true;
       confirm = true;
-      clipboard = "unnamedplus";
+      #clipboard = "unnamedplus";
       cursorline = true;
       list = true;
       signcolumn = "yes";
