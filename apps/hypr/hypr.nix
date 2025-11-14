@@ -16,6 +16,7 @@
           "discord"
           "steam"
           "feishin"
+          "wpctl set-volume 65 15.0"
         ];
       };
   };
@@ -35,6 +36,8 @@
     pkgs.hyprshot
     pkgs.playerctl
     pkgs.aquamarine
+    pkgs.hyprsysteminfo
+    
   ];
 }
 
