@@ -48,7 +48,7 @@
 
           view = {
             width = 30;
-            side = "left";
+            side = "right";
           };
 
           renderer = {
@@ -67,23 +67,20 @@
 
       treesitter = {
         enable = true;
-        indent = true;
-        highlight = { enable = true; };
         settings.ensure_installed = [ "python" "c" "cpp" "go" "lua" "bash" "json" "yaml" "nix" ];
       };
 
-      nvim-autopairs.enable = {
+      nvim-autopairs = {
           enable = true;
           settings = {
             disable_filetype = [
               "TelescopePrompt"
             ];
-
             fast_wrap = {
               end_key = "$";
               map = "<M-e>";
             };
-        };
+          };
       };
 
       presence = {
@@ -166,6 +163,13 @@
           trailing_stiffness = 0.5;        
         };
       };
+
+      plugins.markdown-preview = {
+        enable = true;
+        settings.theme = "dark";
+      };
+      
+      plugins.render-markdown.enable = true;
       
       neoscroll = {
         enable = true;
@@ -183,10 +187,6 @@
             "zt"
             "zz"
             "zb"
-            "<Up>"
-            "<Down>"
-            "<Left>"
-            "<Right>"
           ];
           respect_scrolloff = false;
           stop_eof = true;       
